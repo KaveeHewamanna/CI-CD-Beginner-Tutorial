@@ -65,8 +65,7 @@ loginForm.addEventListener("submit", (e) => {
     return;
   }
 
-  setMessage("Login successful.", "success");.
-
+  setMessage("Login successful.", "success");
   console.log("Login Data:", {
     email: email.value,
     password: password.value,
