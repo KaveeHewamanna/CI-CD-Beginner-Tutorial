@@ -1,4 +1,4 @@
-# CI/CD Pipeline with Jenkins
+# CI/CD Pipeline with Jenkins for Beginners
 
 This project demonstrates a simple **CI/CD pipeline using Jenkins**.  
 It is created for learning purposes and shows how Jenkins can automatically pull source code from GitHub, run build steps, execute tests, and simulate deployment.
