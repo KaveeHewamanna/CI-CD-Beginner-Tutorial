@@ -72,3 +72,36 @@ CI-CD-Pipeline/
 ├── Jenkinsfile
 ├── README.md
 └── project files
+```
+
+## Frontend Demo (Login Screen)
+
+A simple **login screen** is available under the `frontend/` folder.
+
+### Files
+
+- `frontend/index.html` - HTML markup for the login form
+- `frontend/styles.css` - Styles for the login screen
+- `frontend/app.js` - Client-side validation + mock login logic
+
+### How to run
+
+1. Open `frontend/index.html` directly in a browser.
+   - Right-click the file and choose **Open with...** or drag it into a browser window.
+
+2. (Optional) Run a local server (recommended) to avoid browser restrictions:
+
+   - Using Python 3:
+     ```powershell
+     cd frontend
+     python -m http.server 8000
+     ```
+   - Then open: http://localhost:8000
+
+### Demo credentials
+
+- **Email:** `user@example.com`
+- **Password:** `password123`
+
+> This is a demo login screen with no real backend. The login logic is mocked in `frontend/app.js`.
+
