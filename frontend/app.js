@@ -1,60 +1,75 @@
-// Simple login proof-of-concept.
-// In a real app, you would send credentials to a backend API and handle responses securely.
-
-const form = document.getElementById("loginForm");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
+const loginForm = document.getElementById("loginForm");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 const emailError = document.getElementById("emailError");
 const passwordError = document.getElementById("passwordError");
-const messageEl = document.getElementById("message");
+const message = document.getElementById("message");
+const togglePassword = document.getElementById("togglePassword");
+const forgotLink = document.getElementById("forgotLink");
 
-const MOCK_USER = {
-  email: "user@example.com",
-  password: "password123",
-};
+function setMessage(text, type) {
+  message.textContent = text;
+  message.className = `message active ${type}`;
+}
 
-function resetErrors() {
+function clearErrors() {
   emailError.textContent = "";
   passwordError.textContent = "";
-  messageEl.textContent = "";
-  messageEl.className = "message";
+  message.textContent = "";
+  message.className = "message";
 }
 
-function validateForm() {
-  let valid = true;
-  resetErrors();
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
 
-  if (!emailInput.value.trim()) {
+togglePassword.addEventListener("click", () => {
+  const isPassword = password.type === "password";
+  password.type = isPassword ? "text" : "password";
+  togglePassword.textContent = isPassword ? "Hide" : "Show";
+  togglePassword.setAttribute(
+    "aria-label",
+    isPassword ? "Hide password" : "Show password"
+  );
+});
+
+forgotLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  setMessage("Forgot password link clicked.", "success");
+});
+
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  clearErrors();
+
+  let isValid = true;
+
+  if (email.value.trim() === "") {
     emailError.textContent = "Email is required.";
-    valid = false;
+    isValid = false;
+  } else if (!isValidEmail(email.value.trim())) {
+    emailError.textContent = "Please enter a valid email address.";
+    isValid = false;
   }
 
-  if (!passwordInput.value) {
+  if (password.value.trim() === "") {
     passwordError.textContent = "Password is required.";
-    valid = false;
+    isValid = false;
+  } else if (password.value.trim().length < 6) {
+    passwordError.textContent = "Password must be at least 6 characters.";
+    isValid = false;
   }
 
-  return valid;
-}
-
-function handleLogin(event) {
-  event.preventDefault();
-
-  if (!validateForm()) {
+  if (!isValid) {
+    setMessage("Please fix the errors and try again.", "error");
     return;
   }
 
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+  setMessage("Login successful.", "success");
 
-  if (email === MOCK_USER.email && password === MOCK_USER.password) {
-    messageEl.textContent = "Login successful! Welcome back.";
-    messageEl.classList.add("success");
-    form.reset();
-  } else {
-    messageEl.textContent = "Invalid credentials. Try: user@example.com / password123";
-    messageEl.classList.add("error");
-  }
-}
-
-form.addEventListener("submit", handleLogin);
+  console.log("Login Data:", {
+    email: email.value,
+    password: password.value,
+    rememberMe: document.getElementById("rememberMe").checked
+  });
+});
